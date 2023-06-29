@@ -12,7 +12,7 @@ export function ShortLink({ link }: Props) {
     <TooltipProvider>
       <Tooltip>
         <TooltipTrigger asChild>
-          <div className="text-xl cursor-pointer" onClick={() => copy(link)}>
+          <div className="text-xl cursor-pointer hover:text-sky-500" onClick={() => copy(link)}>
             {link}
           </div>
         </TooltipTrigger>
