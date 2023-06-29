@@ -17,7 +17,7 @@ export const ShortenForm = () => {
     register,
     handleSubmit,
     watch,
-    formState: { errors, isLoading },
+    formState: { errors, isSubmitting },
   } = useForm<Inputs>()
 
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
@@ -44,8 +44,8 @@ export const ShortenForm = () => {
             placeholder="Example: https://super-long-link.com/shorten-it"
             className="h-10 text-lg"
           />
-          <Button type="submit" size="lg" className="h-10 text-lg" disabled={isLoading}>
-            {isLoading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
+          <Button type="submit" size="lg" className="h-10 text-lg" disabled={isSubmitting}>
+            {isSubmitting && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
             Shorten!
           </Button>
         </div>
