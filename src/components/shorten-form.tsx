@@ -21,13 +21,11 @@ export const ShortenForm = () => {
   } = useForm<Inputs>()
 
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
-    console.log(data)
     const response = await fetch('/api/v1/shorten', {
       method: 'POST',
       body: JSON.stringify({ longUrl: data.url }),
     })
     const json = await response.json()
-    console.log(json)
     setShortUrl(json.link)
   }
 
