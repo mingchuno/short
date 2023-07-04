@@ -6,6 +6,7 @@ import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
 import { useState } from 'react'
 import { ShortLink } from '@/components/short-link'
+import { ErrorMessage } from '@/components/error-message'
 
 type Inputs = {
   url: string
@@ -13,6 +14,7 @@ type Inputs = {
 
 export const ShortenForm = () => {
   const [shorUrl, setShortUrl] = useState('')
+  const [error, setError] = useState()
   const {
     register,
     handleSubmit,
@@ -26,7 +28,12 @@ export const ShortenForm = () => {
       body: JSON.stringify({ longUrl: data.url }),
     })
     const json = await response.json()
-    setShortUrl(json.link)
+    if (json.error) {
+      setError(json.error)
+    } else if (json.link) {
+      setShortUrl(json.link)
+      setError(undefined)
+    }
   }
 
   console.log(watch('url')) // watch input value by passing the name of it
@@ -47,7 +54,8 @@ export const ShortenForm = () => {
             Shorten!
           </Button>
         </div>
-        <ShortLink link={shorUrl} />
+        {error && <ErrorMessage message={error} />}
+        {!error && <ShortLink link={shorUrl} />}
       </div>
     </form>
   )
