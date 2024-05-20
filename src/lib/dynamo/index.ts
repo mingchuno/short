@@ -31,6 +31,21 @@ export async function getUrlById(id: string): Promise<ShortenRespone> {
   return resp.Item as ShortenRespone
 }
 
+export async function getUrlByLongUrl(longUrl: string): Promise<ShortenRespone | undefined> {
+  const resp = await ddbDocClient.query({
+    TableName: tableName,
+    IndexName: 'long-url-index',
+    ExpressionAttributeValues: {
+      ':longUrl': longUrl,
+    },
+    KeyConditionExpression: 'longUrl = :longUrl',
+  })
+  if (!resp.Items) {
+    return undefined
+  }
+  return resp.Items[0] as ShortenRespone
+}
+
 export async function createShortenUrl(payload: ShortenRespone) {
   const params = {
     TableName: tableName,

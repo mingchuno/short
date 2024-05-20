@@ -1,9 +1,13 @@
 import { type ShortenRespone } from '@/lib/model/shorten'
 import { nanoid } from 'nanoid'
-import { createShortenUrl } from '@/lib/dynamo'
+import { createShortenUrl, getUrlByLongUrl } from '@/lib/dynamo'
 import { appDomain } from '@/lib/config'
 
 export async function shortenUrl(longUrl: string): Promise<ShortenRespone> {
+  const existing = await getUrlByLongUrl(longUrl)
+  if (existing) {
+    return existing
+  }
   // gen id, save the document, return response
   const id = nanoid(9) // Start with 9 and we can increase later
   const document = {
