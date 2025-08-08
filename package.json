@@ -45,5 +45,5 @@
     "eslint-config-prettier": "^8.8.0",
     "prettier": "^2.8.8"
   },
-  "packageManager": "pnpm@8.6.3+sha1.30b2ad9776a393ccd1766239fd21e0c14a3c3acf"
+  "packageManager": "pnpm@10.14.0"
 }
