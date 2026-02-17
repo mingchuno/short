@@ -6,7 +6,7 @@ type Props = {
 }
 
 export function ShortLink({ link }: Props) {
-  const [_, copy] = useCopyToClipboard()
+  const [, copy] = useCopyToClipboard()
   if (!link) return null
   return (
     <TooltipProvider>

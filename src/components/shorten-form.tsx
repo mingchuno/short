@@ -14,12 +14,11 @@ type Inputs = {
 
 export const ShortenForm = () => {
   const [shorUrl, setShortUrl] = useState('')
-  const [error, setError] = useState()
+  const [error, setError] = useState<string | undefined>(undefined)
   const {
     register,
     handleSubmit,
-    watch,
-    formState: { errors, isSubmitting },
+    formState: { isSubmitting },
   } = useForm<Inputs>()
 
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
@@ -35,8 +34,6 @@ export const ShortenForm = () => {
       setError(undefined)
     }
   }
-
-  console.log(watch('url')) // watch input value by passing the name of it
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>

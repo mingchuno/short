@@ -1,11 +1,12 @@
 import { type NextFetchEvent, type NextRequest, NextResponse } from 'next/server'
 import ratelimit from '@/lib/ratelimit'
 
-export default async function middleware(
+export default async function proxy(
   request: NextRequest,
   event: NextFetchEvent
 ): Promise<Response | undefined> {
-  const ip = request.ip ?? '127.0.0.1'
+  const forwardedFor = request.headers.get('x-forwarded-for')
+  const ip = forwardedFor?.split(',')[0]?.trim() ?? request.headers.get('x-real-ip') ?? '127.0.0.1'
 
   const { success, pending, limit, reset, remaining } = await ratelimit.ip.limit(
     `ratelimit_middleware_${ip}`
