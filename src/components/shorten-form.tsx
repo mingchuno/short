@@ -95,11 +95,10 @@ export const ShortenForm = () => {
     <form onSubmit={handleSubmit(onSubmit)} className="relative z-10">
       <section className="mx-auto flex min-h-screen w-full max-w-4xl items-center px-4 py-10 sm:px-10">
         <div className="w-full rounded-2xl border border-slate-200/80 bg-white/80 p-6 shadow-xl backdrop-blur md:p-10">
-          <p className="text-sm font-semibold uppercase tracking-[0.18em] text-sky-600">Short</p>
-          <h1 className="mt-3 text-3xl font-semibold tracking-tight text-slate-900 md:text-5xl">
+          <h1 className="text-4xl font-semibold tracking-tight text-slate-900 md:text-6xl">
             Share cleaner links in seconds
           </h1>
-          <p className="mt-4 max-w-2xl text-base leading-relaxed text-slate-600 md:text-lg">
+          <p className="mt-4 max-w-2xl text-lg leading-relaxed text-slate-600">
             Paste a long URL and generate a short, shareable link with one click.
           </p>
 
@@ -126,7 +125,7 @@ export const ShortenForm = () => {
               >
                 {isSubmitting ? (
                   <>
-                    <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                    <Loader2 className="h-4 w-4 animate-spin" />
                     Shortening...
                   </>
                 ) : (

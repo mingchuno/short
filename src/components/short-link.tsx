@@ -28,7 +28,7 @@ export function ShortLink({ link }: Props) {
           href={link}
           target="_blank"
           rel="noreferrer"
-          className="break-all text-base font-medium text-sky-700 underline decoration-sky-300 underline-offset-4 hover:text-sky-800"
+          className="break-all text-lg font-medium text-sky-700 underline decoration-sky-300 underline-offset-4 hover:text-sky-800"
         >
           {link}
         </a>
