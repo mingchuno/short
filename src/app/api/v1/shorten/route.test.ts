@@ -50,13 +50,24 @@ describe('POST /api/v1/shorten', () => {
     expect(shortenUrl).not.toHaveBeenCalled()
   })
 
-  it('currently propagates malformed JSON errors', async () => {
+  it.each(['{', ''])('returns 400 for malformed or empty JSON %j', async (body) => {
     const malformed = new Request('https://sho.rt/api/v1/shorten', {
       method: 'POST',
-      body: '{',
+      body,
     })
 
-    await expect(POST(malformed)).rejects.toBeInstanceOf(SyntaxError)
+    const response = await POST(malformed)
+    expect(response.status).toBe(400)
+    expect(await response.json()).toEqual({ error: 'Invalid JSON body' })
+    expect(shortenUrl).not.toHaveBeenCalled()
+  })
+
+  it('propagates body read failures unrelated to JSON syntax', async () => {
+    const input = request({ longUrl: 'https://example.com' })
+    const error = new Error('body stream failed')
+    vi.spyOn(input, 'json').mockRejectedValue(error)
+
+    await expect(POST(input)).rejects.toBe(error)
     expect(shortenUrl).not.toHaveBeenCalled()
   })
 

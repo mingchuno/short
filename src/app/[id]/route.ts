@@ -4,11 +4,9 @@ import { getUrlById } from '@/lib/dynamo'
 
 export async function GET(_request: NextRequest, { params }: { params: Promise<{ id: string }> }) {
   const { id } = await params
-  try {
-    const res = await getUrlById(id)
-    return NextResponse.redirect(res.longUrl)
-  } catch (error) {
-    console.error(error)
+  const record = await getUrlById(id)
+  if (!record) {
     redirect('/404')
   }
+  return NextResponse.redirect(record.longUrl)
 }

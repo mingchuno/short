@@ -3,7 +3,15 @@ import { ShortenPayload } from '@/lib/model/shorten'
 import { shortenUrl } from '@/lib/service/shorten'
 
 export async function POST(request: Request) {
-  const payload = await request.json()
+  let payload: unknown
+  try {
+    payload = await request.json()
+  } catch (error) {
+    if (error instanceof SyntaxError) {
+      return NextResponse.json({ error: 'Invalid JSON body' }, { status: 400 })
+    }
+    throw error
+  }
   const result = ShortenPayload.safeParse(payload)
   if (!result.success) {
     return NextResponse.json({ error: result.error }, { status: 400 })

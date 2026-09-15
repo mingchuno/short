@@ -1,5 +1,5 @@
 import { NextRequest } from 'next/server'
-import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
+import { beforeEach, describe, expect, it, vi } from 'vitest'
 
 vi.mock('@/lib/dynamo', () => ({ getUrlById: vi.fn() }))
 vi.mock('next/navigation', () => ({
@@ -21,9 +21,7 @@ function resolveLink() {
 describe('GET /[id]', () => {
   beforeEach(() => {
     vi.mocked(getUrlById).mockReset()
-    vi.spyOn(console, 'error').mockImplementation(() => {})
   })
-  afterEach(() => vi.restoreAllMocks())
 
   it('redirects to the stored destination including its query and fragment', async () => {
     const longUrl = 'https://example.com/article?q=hello%20world#section'
@@ -42,19 +40,17 @@ describe('GET /[id]', () => {
   })
 
   it('redirects missing records to /404', async () => {
-    // DynamoDB returns no Item for missing keys despite the declared return type.
-    vi.mocked(getUrlById).mockImplementation(async () => undefined as never)
+    vi.mocked(getUrlById).mockResolvedValue(undefined)
 
     await expect(resolveLink()).rejects.toThrow('redirect to /404')
     expect(redirect).toHaveBeenCalledExactlyOnceWith('/404')
   })
 
-  it('currently redirects database failures to /404 too', async () => {
+  it('propagates database failures without redirecting to /404', async () => {
     const error = new Error('database unavailable')
     vi.mocked(getUrlById).mockRejectedValue(error)
 
-    await expect(resolveLink()).rejects.toThrow('redirect to /404')
-    expect(redirect).toHaveBeenCalledExactlyOnceWith('/404')
-    expect(console.error).toHaveBeenCalledWith(error)
+    await expect(resolveLink()).rejects.toBe(error)
+    expect(redirect).not.toHaveBeenCalled()
   })
 })

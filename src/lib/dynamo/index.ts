@@ -23,12 +23,12 @@ const ddbDocClient = DynamoDBDocument.from(dynamoClient, {
   marshallOptions: { removeUndefinedValues: true },
 })
 
-export async function getUrlById(id: string): Promise<ShortenRespone> {
+export async function getUrlById(id: string): Promise<ShortenRespone | undefined> {
   const resp = await ddbDocClient.get({
     Key: { id },
     TableName: tableName,
   })
-  return resp.Item as ShortenRespone
+  return resp.Item as ShortenRespone | undefined
 }
 
 export async function getUrlByLongUrl(longUrl: string): Promise<ShortenRespone | undefined> {
