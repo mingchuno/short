@@ -32,6 +32,8 @@ describe('shortenUrl', () => {
 
     await expect(shortenUrl(existing.longUrl)).resolves.toEqual(existing)
     expect(mocks.createShortenUrl).not.toHaveBeenCalled()
+    expect(mocks.nanoid).not.toHaveBeenCalled()
+    expect(mocks.getUrlByLongUrl).toHaveBeenCalledWith(existing.longUrl)
   })
 
   it('creates and returns a new short URL', async () => {
@@ -49,5 +51,23 @@ describe('shortenUrl', () => {
       longUrl: 'https://example.com/new',
       link: 'https://sho.rt/test-id-1',
     })
+  })
+
+  it('propagates lookup failures without generating or saving a record', async () => {
+    const error = new Error('lookup unavailable')
+    mocks.getUrlByLongUrl.mockRejectedValue(error)
+
+    await expect(shortenUrl('https://example.com')).rejects.toBe(error)
+    expect(mocks.nanoid).not.toHaveBeenCalled()
+    expect(mocks.createShortenUrl).not.toHaveBeenCalled()
+  })
+
+  it('does not return a short URL when persistence fails', async () => {
+    const error = new Error('write unavailable')
+    mocks.getUrlByLongUrl.mockResolvedValue(undefined)
+    mocks.createShortenUrl.mockRejectedValue(error)
+
+    await expect(shortenUrl('https://example.com')).rejects.toBe(error)
+    expect(mocks.createShortenUrl).toHaveBeenCalledTimes(1)
   })
 })
