@@ -1,6 +1,6 @@
+import { NextResponse } from 'next/server'
 import { ShortenPayload } from '@/lib/model/shorten'
 import { shortenUrl } from '@/lib/service/shorten'
-import { NextResponse } from 'next/server'
 
 export async function POST(request: Request) {
   const payload = await request.json()

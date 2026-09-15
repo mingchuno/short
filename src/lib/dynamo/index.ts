@@ -1,9 +1,9 @@
 // import 'server-only'
 import { DynamoDBClient } from '@aws-sdk/client-dynamodb'
-import { DynamoDBDocument } from '@aws-sdk/lib-dynamodb'
 import { fromIni } from '@aws-sdk/credential-provider-ini'
-import { type ShortenRespone } from '@/lib/model/shorten'
+import { DynamoDBDocument } from '@aws-sdk/lib-dynamodb'
 import { isDev, tableName } from '@/lib/config'
+import type { ShortenRespone } from '@/lib/model/shorten'
 
 const useProfileCredentials =
   isDev && !process.env.APP_AWS_ACCESS_KEY_ID && !process.env.APP_AWS_SECRET_ACCESS_KEY

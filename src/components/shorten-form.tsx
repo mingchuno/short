@@ -1,12 +1,12 @@
 'use client'
 
 import { Loader2 } from 'lucide-react'
-import { useForm, SubmitHandler } from 'react-hook-form'
-import { Input } from '@/components/ui/input'
-import { Button } from '@/components/ui/button'
 import { useState } from 'react'
-import { ShortLink } from '@/components/short-link'
+import { type SubmitHandler, useForm } from 'react-hook-form'
 import { ErrorMessage } from '@/components/error-message'
+import { ShortLink } from '@/components/short-link'
+import { Button } from '@/components/ui/button'
+import { Input } from '@/components/ui/input'
 
 type Inputs = {
   url: string
@@ -31,7 +31,9 @@ const validateUrl = (value: string) => {
 
 const extractErrorMessage = (payload: ApiError | null, status: number) => {
   if (typeof payload?.error === 'string') {
-    return status === 429 ? 'Rate limit reached. Please wait a few seconds and retry.' : payload.error
+    return status === 429
+      ? 'Rate limit reached. Please wait a few seconds and retry.'
+      : payload.error
   }
   if (payload?.error && typeof payload.error === 'object') {
     if (payload.error.issues?.[0]?.message) {

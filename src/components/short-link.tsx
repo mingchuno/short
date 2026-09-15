@@ -1,7 +1,7 @@
 import { Check, Copy, ExternalLink } from 'lucide-react'
-import { Button } from '@/components/ui/button'
 import { useState } from 'react'
 import { useCopyToClipboard } from 'usehooks-ts'
+import { Button } from '@/components/ui/button'
 
 type Props = {
   link: string

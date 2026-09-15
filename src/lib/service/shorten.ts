@@ -1,7 +1,7 @@
-import { type ShortenRespone } from '@/lib/model/shorten'
 import { nanoid } from 'nanoid'
-import { createShortenUrl, getUrlByLongUrl } from '@/lib/dynamo'
 import { appDomain } from '@/lib/config'
+import { createShortenUrl, getUrlByLongUrl } from '@/lib/dynamo'
+import type { ShortenRespone } from '@/lib/model/shorten'
 
 export async function shortenUrl(longUrl: string): Promise<ShortenRespone> {
   const existing = await getUrlByLongUrl(longUrl)

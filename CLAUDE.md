@@ -17,8 +17,11 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 - Start production server: `pnpm start`
 
 ### Code Quality
-- Run linting: `pnpm lint` (uses ESLint with Next.js config)
-- Format code: `pnpm format` (Prettier for CSS, TS, TSX files in src/)
+- Run all checks: `pnpm check`
+- Run linting and formatting checks: `pnpm lint` (Biome)
+- Apply safe formatting and lint fixes: `pnpm format`
+- Check types: `pnpm typecheck`
+- Run unit tests: `pnpm test`
 
 ## Architecture Overview
 

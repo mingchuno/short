@@ -16,14 +16,13 @@ A fast, scalable URL shortening service built with Next.js 13+ App Router, AWS D
 
 - **Frontend**: Next.js 13+, React, Tailwind CSS, Radix UI
 - **Backend**: Next.js API Routes, AWS DynamoDB, Redis
-- **Tools**: TypeScript, ESLint, Prettier, nanoid
+- **Tools**: TypeScript, Biome, Vitest, nanoid
 
 ## Getting Started
 
 ### Prerequisites
 
-- Node.js 18+
-- pnpm (required package manager)
+- [mise](https://mise.jdx.dev/) (installs the pinned Node.js and pnpm versions)
 - AWS account with DynamoDB access
 - Upstash Redis instance
 
@@ -32,6 +31,7 @@ A fast, scalable URL shortening service built with Next.js 13+ App Router, AWS D
 1. Clone the repository and install dependencies:
 
 ```bash
+mise install
 pnpm install
 ```
 
@@ -83,8 +83,11 @@ Create a DynamoDB table with:
 - `pnpm dev` - Start development server with Turbo
 - `pnpm build` - Build for production
 - `pnpm start` - Start production server
-- `pnpm lint` - Run ESLint
-- `pnpm format` - Format code with Prettier
+- `pnpm check` - Run linting, type checking, and tests
+- `pnpm lint` - Check formatting and lint rules with Biome
+- `pnpm format` - Apply safe Biome formatting and lint fixes
+- `pnpm typecheck` - Check TypeScript types
+- `pnpm test` - Run unit tests once
 
 ### API Endpoints
 
